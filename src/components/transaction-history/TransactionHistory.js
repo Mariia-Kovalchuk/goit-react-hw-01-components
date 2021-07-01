@@ -1,40 +1,36 @@
-// История транзакций
-// Необходимо создать компонент истории транзакций в личном кабинете интернет банка.
+import React from "react";
+import PropTypes from "prop-types";
 
-// Данные для списка доступны в формате JSON в файле transactions.json. Это массив объектов, каждый объект описывает одну транзакцию со следующими свойствами:
+const TransactionHistory = ({ transactions }) =>
+    <table className="transaction-history">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Currency</th>
+            </tr>
+        </thead>
 
-// id — уникальный идентификатор транзакции
-// type — тип транзакции
-// amount - сумма транзакции
-// currency - тип валюты
-// Описание компонента
-// Необходимо создать компонент <TransactionHistory> принимающий один проп items - массив объектов транзакций из transactions.json. Компонент создает разметку таблицы. Каждая транзакция это строка таблицы. В примере приведена разметка двух транзакций.
-
-// {/* <table class="transaction-history">
-//   <thead>
-//     <tr>
-//       <th>Type</th>
-//       <th>Amount</th>
-//       <th>Currency</th>
-//     </tr>
-//   </thead>
-
-//   <tbody>
-//     <tr>
-//       <td>Invoice</td>
-//       <td>125</td>
-//       <td>USD</td>
-//     </tr>
-//     <tr>
-//       <td>Withdrawal</td>
-//       <td>85</td>
-//       <td>USD</td>
-//     </tr>
-//   </tbody>
-// </table > */}
+        <tbody>
+            {transactions.map(({ id, type, amount, currency }) =>
+                <tr key={id}>
+                    <td>{type}</td>
+                    <td>{amount}</td>
+                    <td>{currency}</td>
+                </tr>
+            
+            )}
+        </tbody>
+    </table >
+    ;
     
+TransactionHistory.propTypes = {
+    transactions: PropTypes.arrayOf(PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        amount: PropTypes.string.isRequired,
+        currency: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired
+    })).isRequired
+};
 
-// Пример использования
-// import transactions from 'путь/к/transactions.json';
-
-// <TransactionHistory items={transactions} />;
+export default TransactionHistory;

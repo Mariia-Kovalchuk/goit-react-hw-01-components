@@ -1,37 +1,36 @@
-// Компонент должен принимать два пропа title и stats, в которых указывается заголовок и объект статистики.
+import React from "react";
+import PropTypes from "prop-types";
 
-// title - не обязателен, и если он не передан, не должна рендериться разметка заголовка <h2>.
-// stats - массив объектов содержащих информацию о элементе статистики. Может иметь произвольное кол-во элементов.
+
+// stats - массив объектов содержащих информацию о элементе статистики. Может иметь произвольное кол-во элементов. 
+// Постараться убрать повторения в масссиве с одинаковым типом и сможить их значения
 // Цвет фона элемента статистики в оформлении можно пропустить, либо создать функцию для генерации случайного цвета.
 
 
-// Компонент должен создавать DOM элемент следующей структуры.
 
-{/* <section class="statistics">
-  <h2 class="title">Upload stats</h2>
+const Statistics = ({title, stats}) =>
+  <section className="statistics">
+    {title && <h2 className="title">{title}</h2> }
+    <ul className="stat-list">
+      {stats.map(({id, label, percentage }) => 
+      <li className="item" key={id}>
+        <span className="label">{label}</span>
+        <span className="percentage">{percentage} %</span>
+      </li>
+      )}
+    </ul>
+  </section >
+  ;
 
-  <ul class="stat-list">
-    <li class="item">
-      <span class="label">.docx</span>
-      <span class="percentage">4%</span>
-    </li>
-    <li class="item">
-      <span class="label">.mp3</span>
-      <span class="percentage">14%</span>
-    </li>
-    <li class="item">
-      <span class="label">.pdf</span>
-      <span class="percentage">41%</span>
-    </li>
-    <li class="item">
-      <span class="label">.mp4</span>
-      <span class="percentage">12%</span>
-    </li>
-  </ul>
-</section > */}
+
+Statistics.propTypes = {
+  title: PropTypes.string,
+  stats: PropTypes.arrayOf(PropTypes.exact({
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    percentage: PropTypes.number.isRequired
+  })).isRequired
     
-// Пример использования
-// import statisticalData from '/путь/к/statistical-data.json';
-
-// <Statistics title="Upload stats" stats={statisticalData} />;
-// <Statistics stats={statisticalData} />;
+  }
+    
+export default Statistics;
