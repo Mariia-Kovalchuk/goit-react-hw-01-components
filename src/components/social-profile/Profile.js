@@ -1,15 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-
-const Profile = ({ name, tag, location, avatar, stats }) =>     
+const Profile = ({ name, tag, location, avatar, stats }) => (
   <div className="profile">
     <div className="description">
-      <img
-        src={avatar}
-        alt={name}
-        className="avatar"
-      />
+      <img src={avatar} alt={name} className="avatar" />
       <p className="name"> {name}</p>
       <p className="tag">@{tag}</p>
       <p className="location">{location}</p>
@@ -29,9 +24,8 @@ const Profile = ({ name, tag, location, avatar, stats }) =>
         <span className="quantity">{stats.likes}</span>
       </li>
     </ul>
-    </div>
-  ;
-
+  </div>
+);
 Profile.propTypes = {
   name: PropTypes.string.isRequired,
   tag: PropTypes.string.isRequired,
