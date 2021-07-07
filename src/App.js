@@ -1,16 +1,18 @@
 import React from "react";
-import FriendList from "./components/friend-list/FriendList";
-import friends from "./components/friend-list/friends.json";
-import Profile from "./components/social-profile/Profile";
-import user from "./components/social-profile/user.json";
-import Statistics from "./components/statistics/Statistics";
-import statisticalData from "./components/statistics/statistical-data.json";
-import TransactionHistry from "./components/transaction-history/TransactionHistory";
-import transactions from "./components/transaction-history/transactions.json";
+import Container from "./components/Container/Container";
+import Profile from "./components/SocialProfile/Profile";
+import Statistics from "./components/Statistics/Statistics";
+import FriendList from "./components/FriendList/FriendList";
+import TransactionHistry from "./components/TransactionHistory/TransactionHistory";
+
+import user from "./components/SocialProfile/user.json";
+import statisticalData from "./components/Statistics/statistical-data.json";
+import friends from "./components/FriendList/friends.json";
+import transactions from "./components/TransactionHistory/transactions.json";
 
 const App = () => {
   return (
-    <div>
+    <Container>
       <Profile
         name={user.name}
         tag={user.tag}
@@ -21,7 +23,7 @@ const App = () => {
       <Statistics title="Upload stats" stats={statisticalData} />
       <FriendList friends={friends} />
       <TransactionHistry transactions={transactions} />
-    </div>
+    </Container>
   );
 };
 

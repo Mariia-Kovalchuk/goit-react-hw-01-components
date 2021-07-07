@@ -1,23 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import style from './Statistics.module.css';
 
-// stats - массив объектов содержащих информацию о элементе статистики. Может иметь произвольное кол-во элементов.
-// Постараться убрать повторения в масссиве с одинаковым типом и сможить их значения
-// Цвет фона элемента статистики в оформлении можно пропустить, либо создать функцию для генерации случайного цвета.
 
-const Statistics = ({ title, stats }) => (
-  <section className="statistics">
-    {title && <h2 className="title">{title}</h2>}
-    <ul className="stat-list">
-      {stats.map(({ id, label, percentage }) => (
-        <li className="item" key={id}>
-          <span className="label">{label}</span>
-          <span className="percentage">{percentage} %</span>
-        </li>
-      ))}
-    </ul>
-  </section>
-);
+const Statistics = ({ title, stats }) => {
+  const groupedStats = uniqify(stats, 'label');
+
+  return (
+    <section className={style.statistics}>
+      {title && <h2 className={style.title}>{title}</h2>}
+      <ul className={style.statList}>
+        {groupedStats.map(({ id, label, percentage }) => (
+          <li className={style.item} key={id} style={{ backgroundColor: randomColor() }}>
+            <span className={style.label}>{label}</span>
+            <span className={style.label}>{percentage} %</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+};
+
 Statistics.propTypes = {
   title: PropTypes.string,
   stats: PropTypes.arrayOf(
@@ -28,5 +31,27 @@ Statistics.propTypes = {
     })
   ).isRequired,
 };
+
+const random = () => Math.floor(255 * Math.random());
+
+function randomColor() {
+  return `rgb(${random()}, ${random()}, ${random()})`;
+}
+
+function uniqify (array, key) {
+    const labels = [];
+    const filtered = JSON.parse(JSON.stringify(array)).reduce((prev, curr) => {
+      if (!labels.includes(curr[key])) {
+        labels.push(curr[key]);
+        prev.push(curr)
+      } else {
+        const indexOfLabel = prev.findIndex(item => item[key] === curr[key]);
+        prev[indexOfLabel].percentage += curr.percentage;
+      }
+      return prev;
+    }, []);
+    return filtered;
+}
+
 
 export default Statistics;
